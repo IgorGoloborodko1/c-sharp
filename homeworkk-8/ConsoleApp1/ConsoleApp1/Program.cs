@@ -9,6 +9,13 @@ namespace homework_8
         public string Name { get; set; }
         public int Year { get; set; }
     }
+
+    class Student
+    {
+        public int schoolNum { get; set; }
+        public int enterDate { get; set; }
+        public string lastName { get; set; }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -173,17 +180,9 @@ namespace homework_8
             //первых элементов пар (по возрастанию), а для равных элементов - порядком вторых элементов пар (по убыванию).
             //TODO
             {
-                IEnumerable<string> a = new string[] { "8ANGULAR", "2REACT16", "JAVASCRIPT" };
-                IEnumerable<string> b = new string[] { "FRONTEND", "FRONTEND", "AUTOMATION" };
-                var res = b.Join(a  ,
-                                 x => x.Length,
-                                 y => y.Length,
-                                 (x, y) => x.ToString() + " : " + y.ToString()).
-                                 OrderBy(x => x).ThenByDescending(x => x);
-                foreach (var i in res)
-                {
-                    Console.WriteLine(i);
-                }
+                IEnumerable<string> secondSequence = new string[] { "8ANGULAR", "2REACT16", "JAVASCRIPT" };
+                IEnumerable<string> firstSequence = new string[] { "FRONTEND", "FRONTEND", "AUTOMATION" };
+                var res = firstSequence.Join(secondSequence, x => x.Length, y => y.Length, (x, y) => x + " : " + y).Distinct().OrderBy(x => x);
             }
 
             //Дана целочисленная последовательность А.
@@ -211,17 +210,40 @@ namespace homework_8
 
             //Исходная последовательность содержит сведения об абитуриентах. Каждый элемент последовательности
             //включает следующие поля: <Номер школы> <Год поступления> <Фамилия>
-            //Для каждого года, присуттствующего в исходных данных, вывести число различных школ, которые окончили абитуриенты,
+            //Для каждого года, присутствующего в исходных данных, вывести число различных школ, которые окончили абитуриенты,
             //поступившие в этом году (вначале указывать число школ, затем год).
             //Сведения о каждом годе выводить на навой строке и упрорядочивать по возрастанию числа школ,
             //а для совпадающих чисел - по возрастанию номера года.
             //TODO
             {
+                List<Student> students = new List<Student>
+                {
+                     new Student { schoolNum = 11, enterDate = 2001, lastName = "Poroshenko" },
+                     new Student { schoolNum = 11, enterDate = 2003, lastName = "Zelenskiy" },
+                     new Student { schoolNum = 10, enterDate = 2004, lastName = "Tymoshenko" },
+                     new Student { schoolNum = 11, enterDate = 2000, lastName = "Grytsenko" },
+                     new Student { schoolNum = 127, enterDate = 1999, lastName = "RandonLastName" },
+                     new Student { schoolNum = 10, enterDate = 1999, lastName = "Obama" },
+                     new Student { schoolNum = 7, enterDate = 2003, lastName = "Klitchko" }
+                };
 
+                List<string> res = new List<string>();
+
+                /*IEnumerable<IGrouping<int, Student>>*/
+                var result = students.GroupBy(x => x.enterDate)
+                                     .Select(g => new
+                                     {
+                                        Count = g.Select(group => group.schoolNum).Distinct().Count(),
+                                        Date = g.Key
+                                        })
+                                     .OrderBy(x => x.Count).ThenBy(x => x.Date);
+                //foreach (var i in result)
+                //{
+                //    Console.WriteLine($"{i.Count} : {i.Date}");
+                //}
+
+                Console.ReadLine();
             }
-
-            Console.WriteLine();
-            Console.ReadLine();
         }
     }
 }
