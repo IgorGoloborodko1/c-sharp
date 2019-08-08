@@ -227,9 +227,6 @@ namespace homework_8
                      new Student { schoolNum = 7, enterDate = 2003, lastName = "Klitchko" }
                 };
 
-                List<string> res = new List<string>();
-
-                /*IEnumerable<IGrouping<int, Student>>*/
                 var result = students.GroupBy(x => x.enterDate)
                                      .Select(g => new
                                      {
@@ -237,10 +234,10 @@ namespace homework_8
                                         Date = g.Key
                                         })
                                      .OrderBy(x => x.Count).ThenBy(x => x.Date);
-                //foreach (var i in result)
-                //{
-                //    Console.WriteLine($"{i.Count} : {i.Date}");
-                //}
+                foreach (var i in result)
+                {
+                    Console.WriteLine($"{i.Count} : {i.Date}");
+                }
 
                 Console.ReadLine();
             }
