@@ -76,16 +76,15 @@ namespace ConsoleApp1
         }
 
         //Task-2.1 arithmetic progression multiplication
-        public static int ArithmeticProgression(int firstElement, int step, int lastElement)
+        public static int ArithmeticProgression(int firstElement, int step, int numOfElements)
         {
-            if (lastElement == firstElement)
+            if (numOfElements == 0)
             {
-                return firstElement;
+                return 1;
             }
             else
             {
-                return lastElement * ArithmeticProgression(firstElement, step, lastElement - step);
-
+                return firstElement * ArithmeticProgression(firstElement + step, step, numOfElements - 1);
             }
         }
 
@@ -105,8 +104,10 @@ namespace ConsoleApp1
         {
             int[] resArr1 = SortArr(arr1, SortDirection.Descending);
             bool resArr2 = checkIfArrIsSorted(arr2, SortDirection.Ascending);
-            int ArithRes = ArithmeticProgression(2, 2, 10);
+            int ArithRes = ArithmeticProgression(2, 2, 5);
             double GeomRes =  GeometricProgression(100, 2, 7);
+            Console.WriteLine(GeomRes);
+            Console.ReadLine();
         }
     }
 }
