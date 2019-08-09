@@ -6,56 +6,107 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
+    enum SortDirection
+    {
+        Ascending,
+        Descending
+    }
     class Program
     {
-        //task-1.1 sort an array accending
-        public int[] arrToBeSorted = { 1, 66, 6, 63, 2, 6, 7, 8, 9, 22 };
-        public void SortArr(int[] arr)
+        public static int[] arr1 = { 1, 66, 6, 63, 2, 6, 7, 8, 9, 22 };
+        public static int[] arr2 = { 5, 4, 3, 2, 1};
+
+        //task-1.1 sort an array ascending/descending
+        public static int[] SortArr(int[] arr, SortDirection direction)
         {
             int swap;
-            for (int i = 0; i < arr.Length; i++)
 
+            for (int i = 0; i < arr.Length; i++)
+            {
                 for (int j = 0; j < arr.Length - i - 1; j++)
                 {
-
-                    if (arr[j] > arr[j + 1])
+                    if (direction == SortDirection.Ascending)
                     {
-                        swap = arr[j];
-                        arr[j] = arr[j + 1];
-                        arr[j + 1] = swap;
+                        if (arr[j] > arr[j + 1])
+                        {
+                            swap = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = swap;
+                        }
                     }
-
+                    else if (direction == SortDirection.Descending)
+                    {
+                        if (arr[j] < arr[j + 1])
+                        {
+                            swap = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = swap;
+                        }
+                    }
                 }
+            }
+
+            return arr;
         }
 
-        //task-1.2 check if arr is sorted
-        int[] arrToBeChecked = { 1, 4, 6, 6, 9, 10, 11};
-        public bool checkIfArrisSorted (int[] arr)
+        //task-1.2 check if arr is sorted ascending/descending
+        public static bool checkIfArrIsSorted (int[] arr, SortDirection direction)
         {
-            for (int k = 0; k < arr.Length; k++)
+            if (direction == SortDirection.Ascending)
             {
-                if (arr[k] > arr[k+1])
+                for (int k = 0; k < arr.Length - 1; k++)
                 {
-                    return false;
-                } 
+                    if (arr[k] > arr[k + 1])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (direction == SortDirection.Descending)
+            {
+                for (int k = 0; k < arr.Length - 1; k++)
+                {
+                    if (arr[k] < arr[k + 1])
+                    {
+                        return false;
+                    }
+                }
             }
             return true;
         }
 
-        //task-2.1 multiplied elements
-        public int returnMultipliedElements (int firstElement, int lastElement, int step)
+        //Task-2.1 arithmetic progression multiplication
+        public static int ArithmeticProgression(int firstElement, int step, int lastElement)
         {
-            int result = 0;
-            int multiplyBy = 0;
-            for ( int i = firstElement; i <= lastElement; i += step)
+            if (lastElement == firstElement)
             {
-                result = multiplyBy * (firstElement + step);
-                multiplyBy++;
+                return firstElement;
             }
-            return result;
+            else
+            {
+                return lastElement * ArithmeticProgression(firstElement, step, lastElement - step);
+
+            }
         }
-        static void Main(string[] args)
+
+        //Task-2.2 geometric progression multiplication
+        public static double GeometricProgression(double firstElement, double step, double limit)
         {
+            if (firstElement <= limit)
+            {
+                return 1;
+            }
+            else
+            {
+                return firstElement * GeometricProgression(firstElement / step, step, limit);
+            }
+        }
+            static void Main(string[] args)
+        {
+            int[] resArr1 = SortArr(arr1, SortDirection.Descending);
+            bool resArr2 = checkIfArrIsSorted(arr2, SortDirection.Ascending);
+            int ArithRes = ArithmeticProgression(2, 2, 10);
+            double GeomRes =  GeometricProgression(100, 2, 7);
         }
     }
 }
