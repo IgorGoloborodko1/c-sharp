@@ -10,15 +10,14 @@ namespace ConsoleApp1
     {
         public int FirstElementIndex { get; }
         public int LastElementIndex { get; }
-        public int Lenght { get { return Arr.Length; } }
-        private readonly int[] Arr;
-
-        public CustomArray(int[] arr, int startIndex)
+        public int Lenght
         {
-            FirstElementIndex = startIndex;
-            LastElementIndex = (arr.Length - 1) + startIndex;
-            Arr = arr;
+            get
+            {
+                return Arr.Length;
+            }
         }
+        private readonly int[] Arr;
         public int this[int index]
         {
             get
@@ -29,6 +28,13 @@ namespace ConsoleApp1
             {
                 Arr[index - FirstElementIndex] = value;
             }
+        }
+
+        public CustomArray(int[] arr, int startIndex)
+        {
+            FirstElementIndex = startIndex;
+            LastElementIndex = (arr.Length - 1) + startIndex;
+            Arr = arr;
         }
     }
 } 
