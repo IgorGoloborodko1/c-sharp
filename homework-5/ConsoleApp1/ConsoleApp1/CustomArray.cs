@@ -6,40 +6,29 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    class CustomArray
+    public class CustomArray
     {
-        public int[] Arr { get;}
-        public int StartIndex { get;}
-        public int LastIndex
+        public int FirstElementIndex { get; }
+        public int LastElementIndex { get; }
+        public int Lenght { get { return Arr.Length; } }
+        private readonly int[] Arr;
+
+        public CustomArray(int[] arr, int startIndex)
         {
-            get
-            {
-                return StartIndex + (Arr.Length - 1);
-            }
+            FirstElementIndex = startIndex;
+            LastElementIndex = (arr.Length - 1) + startIndex;
+            Arr = arr;
         }
-        public int Length
-        {
-            get
-            {
-                return Arr.Length;
-            }
-        }
-        
         public int this[int index]
         {
             get
             {
-                return Arr[index];
+                return Arr[index - FirstElementIndex];
             }
             set
             {
-                Arr[index] = StartIndex;
+                Arr[index - FirstElementIndex] = value;
             }
-        }
-        public CustomArray(int[] arr, int startIndex)
-        {
-            Arr = arr;
-            StartIndex = startIndex;
         }
     }
 } 
